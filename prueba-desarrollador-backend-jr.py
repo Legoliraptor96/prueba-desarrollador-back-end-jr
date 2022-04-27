@@ -19,10 +19,11 @@ pd.options.mode.chained_assignment = None  # default='warn'
 path=r"C:\Users\Alonso\Documents\GitHub\prueba-desarrollador-back-end-jr\CPdescarga.xls"
 
 #Leer el archivo completo y guardarlo en una variable'
-SEPOMEX = pd.read_excel(path,sheet_name=None)
+sepomex = pd.read_excel(path,sheet_name=None)
 
 #Concatenar las hojas
-df_sepomex=pd.concat(SEPOMEX,ignore_index=True)
+df_sepomex=pd.concat(sepomex,ignore_index=True)
+
 
 #Prueba imprimir tablas concatenadas
 #print(df_sepomex)
@@ -62,6 +63,30 @@ df_union=pd.concat(df_tablas)
 #print(df_union)
 
 #-----------------------Fin Punto 2 --------------------------------------------------
+
+
+
+#-----------------------Inicio Punto 3 -----------------------------------------------
+
+#generación de un data frame a partir del leido aleatorizando el orden de los datos en las columnas
+
+df_sepomex_rand=df_sepomex.sample(frac=1).reset_index(drop=True)
+#print(df_sepomex_rand)
+
+#scrip que genera tablas a partir de data frames
+
+def script_rand(df_rand,repeticiones=None):
+    for i in range(repeticiones):
+        yield df_rand.sample(frac=1)
+        print(df_rand)
+        #pd.concat(df_rand,names=["Replicas"])
+        
+        
+df_rand10 = script_rand(df_sepomex,repeticiones=10)
+
+print(df_rand10)
+
+
 
 
 
