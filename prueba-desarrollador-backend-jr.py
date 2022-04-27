@@ -3,6 +3,7 @@ Prueba para el puesto de desarrollador back end jr, Cura Deuda
 Alonso Daniel Jacobo Hernández
 '''
 #Paquetes importados
+from tkinter import N
 import pandas as pd
 import xlrd
 
@@ -75,16 +76,42 @@ df_sepomex_rand=df_sepomex.sample(frac=1).reset_index(drop=True)
 
 #scrip que genera tablas a partir de data frames
 
-def script_rand(df_rand,repeticiones=None):
+'''
+def script_rand(df_inp,repeticiones=None,df_out):
+    df_out=[]
     for i in range(repeticiones):
         yield df_rand.sample(frac=1)
-        print(df_rand)
         #pd.concat(df_rand,names=["Replicas"])
-        
-        
-df_rand10 = script_rand(df_sepomex,repeticiones=10)
+'''
 
-print(df_rand10)
+
+#Codigo para generar 10 veces la tabla con datos aleatorios Sepomex
+'''
+df_out=[]
+count = 1
+while (count < 11):
+   df_out.append(df_sepomex.sample(frac=1).reset_index(drop=True))
+   count = count + 1
+
+pd.concat(df_out)
+
+#print(df_out)
+'''
+#Codigo pasado a scrip generar n veces la tabla con datos aleatorios Sepomex
+
+def script_rand(df_inp,df_out,n):
+    #df_out=[]
+    count = 1
+    while (count <= n):
+        df_out.append(df_inp.sample(frac=1).reset_index(drop=True))
+        count = count + 1
+    pd.concat(df_out)
+
+df_rand=[]
+
+script_rand(df_sepomex,df_rand,10)
+
+print(df_rand)
 
 
 
