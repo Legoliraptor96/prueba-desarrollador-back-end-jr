@@ -74,17 +74,6 @@ df_union=pd.concat(df_tablas)
 df_sepomex_rand=df_sepomex.sample(frac=1).reset_index(drop=True)
 #print(df_sepomex_rand)
 
-#scrip que genera tablas a partir de data frames
-
-'''
-def script_rand(df_inp,repeticiones=None,df_out):
-    df_out=[]
-    for i in range(repeticiones):
-        yield df_rand.sample(frac=1)
-        #pd.concat(df_rand,names=["Replicas"])
-'''
-
-
 #Codigo para generar 10 veces la tabla con datos aleatorios Sepomex
 '''
 df_out=[]
@@ -111,9 +100,9 @@ df_rand=[]
 
 script_rand(df_sepomex,df_rand,10)
 
-print(df_rand)
+#print(df_rand)
 
 
-
+#-----------------------Fin Punto 3 -----------------------------------------------
 
 
