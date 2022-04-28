@@ -3,10 +3,13 @@ Prueba para el puesto de desarrollador back end jr, Cura Deuda
 Alonso Daniel Jacobo Hernández
 '''
 #Paquetes importados
+from pprint import pprint
 from tkinter import N
+from urllib import response
 import pandas as pd
 import xlrd
-
+import json
+import requests
 
 
 #ignorar SettingWithCopyWarning 
@@ -89,14 +92,15 @@ pd.concat(df_out)
 #Codigo pasado a scrip generar n veces la tabla con datos aleatorios Sepomex
 
 def script_rand(df_inp,df_out,n):
-    #df_out=[]
     count = 1
     while (count <= n):
         df_out.append(df_inp.sample(frac=1).reset_index(drop=True))
         count = count + 1
     pd.concat(df_out)
+    
 
 df_rand=[]
+
 
 script_rand(df_sepomex,df_rand,10)
 
@@ -104,5 +108,124 @@ script_rand(df_sepomex,df_rand,10)
 
 
 #-----------------------Fin Punto 3 -----------------------------------------------
+
+#-----------------------Inicio Punto 4 y 5-----------------------------------------------
+
+#generar un archivo json a partir de aleatorizacion de lo datos de SEPOMEX
+
+
+diccionario={}
+
+def script_rand_tojs(df_inp,diccionario,n):
+    count = 1
+    while (count <= n):
+        count = count + 1
+        rand =df_inp.sample(frac=1).reset_index(drop=True)
+        diccionario=rand.to_json(orient = 'columns')
+        with open('./sepomex.json', 'w') as file:json.dump(diccionario, file,sort_keys=True, indent=4)
+    
+
+script_rand_tojs(df_sepomex,diccionario,10)
+
+#abrimos de nuevo el json generado y asignamos a una variable
+
+with open('./sepomex.json',"r") as sepomexjs:
+    #pasamos el json a  diccionario
+    json_diccionario = json.load(sepomexjs)
+
+#pprint(#pasamos el json a  diccionario)
+
+#nueva entrada a agregar
+
+def nuevaentrada(d_codigo,d_asenta,d_tipo_asenta,D_mnpio,d_estado,d_ciudad,d_CP,c_estado,c_oficina,c_CP,c_tipo_asenta,c_mnpio,id_asenta_cpcons,d_zona,c_cve_ciudad):
+    entrada={d_codigo,d_asenta,d_tipo_asenta,D_mnpio,d_estado,d_ciudad,d_CP,c_estado,c_oficina,c_CP,c_tipo_asenta,c_mnpio,id_asenta_cpcons,d_zona,c_cve_ciudad}
+    json_diccionario.append(entrada)
+
+#-----------------------Fin Punto 4 y 5-----------------------------------------------
+
+#-----------------------inicio parte 7-----------------------------------------------
+
+#capa de seguridad mediante HTTPBasicAuth, comentada por motivos de comodidad
+
+'''
+from requests.auth import HTTPBasicAuth
+response = requests.get('pagina web de interes ejemplo github',auth=HTTPBasicAuth('usuario','contraseña'))
+response = requests.get('https://api.github.com/user',auth=HTTPBasicAuth('usuario','contraseña'))
+print('Codigo de respuesta'+ str(response.status_code))
+if response.status_code == 200
+    print('Acesso correctamente: '+response.text)
+'''
+#-----------------------Fin parte 7-----------------------------------------------
+
+
+#intentos implementacion de busqueda parte 4 y 5, por motivos de tiempo ya no pude hacer mas pruebas 
+#pero dejo como evidencia las ideas que tenia
+
+#print(list(filter(lambda x:x['d_CP']==string,json_diccionario)))
+
+'''
+def jsoncp(json, cp):
+    for item in json['d_CP']:
+        if item['d_CP'] == cp:
+            return item['d_asenta']
+        
+
+jsoncp(json_diccionario,20001)
+'''
+'''
+for entry in json_diccionario:
+    if '20001' == json_diccionario['d_CP']
+    print( 'el codigo postal'    , ' colonia  :', json_diccionario['d_asenta'])
+'''
+
+'''
+def jsoncp (cp):
+    for entry in js:
+        if cp == entry['d_CP']:
+            print(entry['d_asenta'])
+
+jsoncp('20001')
+'''
+'''
+i=0
+item=20001
+for item in js_obj['d_CP']:
+    if item in js_obj['d_CP'] :
+        i=i+1
+print(i)
+ '''   
+
+'''
+def jsoncp(json, cp):
+    for item in json['d_CP']:
+        if item['d_CP'] == cp:
+            return item['d_asenta']
+        
+'''
+
+'''
+def jsoncp (cp):
+    for entry in js:
+        if cp == entry ['d_CP']:
+            return entry ['d_asenta']
+        
+jsoncp(20001)
+'''
+
+'''
+for item in js:
+    print item['d_codigo']
+    print item['d_asenta']
+'''
+
+
+
+
+
+
+
+
+
+
 
 
